@@ -55,9 +55,9 @@ function parse_git_branch() {
 }
 
 function branch_color() {
-	c_alert=$(tput setaf 160)
-	c_warning=$(tput setaf 227)
-	c_ok=$(tput setaf 82)
+	local c_alert=$(tput setaf 160)
+	local c_warning=$(tput setaf 227)
+	local c_ok=$(tput setaf 82)
 
     if [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
         color=""

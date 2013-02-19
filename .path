@@ -8,3 +8,8 @@ do
     [[ -e $another_bin ]] && export PATH=$another_bin:$PATH
 done
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+
+if which rbenv > /dev/null; then
+	eval "$(rbenv init -)"
+	rbenv global 1.9.3-p385
+fi

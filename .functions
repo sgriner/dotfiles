@@ -65,7 +65,7 @@ function server() {
 # (Requires PHP 5.4.0+.)
 function phpserver() {
 	local port="${1:-4000}"
-	local ip=$(ipconfig getifaddr en1)
+	local ip=$(ipconfig getifaddr en0)
 	sleep 1 && open "http://${ip}:${port}/" &
 	php -S "${ip}:${port}"
 }
@@ -165,10 +165,20 @@ function unquarantine() {
 }
 
 function colors() {
-	x=`tput op`
-	y=`printf %$((${COLUMNS}-6))s`
+	local x=`tput op`
+	local y=`printf %$((${COLUMNS}-6))s`
 	for i in {0..256}; do
 		o=00$i
 		echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x
 	done
+}
+
+function xcode() {
+	local xcfile=`find ./ -type d -depth 1 -name \*\.xcworkspace`
+	[ -e "$xcfile" ] || xcfile=`find ./ -type d -depth 1 -name \*\.xcodeproj`
+	[ -e "$xcfile" ] && (echo "Opening $xcfile in Xcode..."; open "$xcfile") || echo "No Xcode files found."
+}
+
+function proj() {
+	cd ~/Projects/$1
 }
