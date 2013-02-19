@@ -16,12 +16,14 @@ if tput setaf 1 &> /dev/null; then
 		GREEN=$(tput setaf 190)
 		PURPLE=$(tput setaf 141)
 		WHITE=$(tput setaf 256)
+		CYAN=$(tput setaf 39)
 	else
 		MAGENTA=$(tput setaf 5)
 		ORANGE=$(tput setaf 4)
 		GREEN=$(tput setaf 2)
 		PURPLE=$(tput setaf 1)
 		WHITE=$(tput setaf 7)
+		CYAN=""
 	fi
 	BOLD=$(tput bold)
 	RESET=$(tput sgr0)
@@ -31,6 +33,7 @@ else
 	GREEN="\033[1;32m"
 	PURPLE="\033[1;35m"
 	WHITE="\033[1;37m"
+	CYAN=""
 	BOLD=""
 	RESET="\033[m"
 fi
@@ -51,5 +54,42 @@ function parse_git_branch() {
 	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
 }
 
-export PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n\$ \[$RESET\]"
+function branch_color() {
+	c_alert=$(tput setaf 160)
+	c_warning=$(tput setaf 227)
+	c_ok=$(tput setaf 82)
+
+    if [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
+        color=""
+        if git diff --no-ext-diff --quiet; then
+			if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+				color=${c_alert}
+			else
+				if git rev-parse --quiet --verify HEAD >/dev/null; then
+					if git diff-index --cached --quiet HEAD --; then
+						color=${c_ok}
+					else
+						color=${c_warning}
+					fi
+				fi
+			fi
+        else
+            color=${c_alert}
+        fi
+    else
+        return 0
+    fi
+    echo -n $color
+}
+
+if [ -f $(brew --prefix)/etc/bash_completion.d/git-completion.bash ]; then
+	GIT_PS1_SHOWUPSTREAM="auto"
+	GIT_PS1_SHOWSTASHSTATE=1
+	gitPrompt='\[$(branch_color)\]$(__git_ps1 "%s")'
+else
+	gitPrompt='\[$PURPLE\]$(parse_git_branch)'
+fi
+
+export PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$CYAN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")$gitPrompt\[$WHITE\]\n\$ \[$RESET\]"
 export PS2="\[$ORANGE\]→ \[$RESET\]"
+unset gitPrompt
