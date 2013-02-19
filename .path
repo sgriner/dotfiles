@@ -1,0 +1,10 @@
+# PATH additions
+for another_bin in \
+    $(brew --prefix coreutils)/libexec/gnubin \
+    $HOME/bin \
+    /usr/local/php5/bin \
+    $HOME/.rbenv/bin
+do
+    [[ -e $another_bin ]] && export PATH=$another_bin:$PATH
+done
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
