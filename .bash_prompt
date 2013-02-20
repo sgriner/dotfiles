@@ -11,12 +11,12 @@ fi
 if tput setaf 1 &> /dev/null; then
 	tput sgr0
 	if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
-		MAGENTA=$(tput setaf 9)
-		ORANGE=$(tput setaf 172)
+		MAGENTA=$(tput setaf 197)
+		ORANGE=$(tput setaf 228)
 		GREEN=$(tput setaf 190)
 		PURPLE=$(tput setaf 141)
 		WHITE=$(tput setaf 256)
-		CYAN=$(tput setaf 39)
+		CYAN=$(tput setaf 6)
 	else
 		MAGENTA=$(tput setaf 5)
 		ORANGE=$(tput setaf 4)
@@ -55,9 +55,9 @@ function parse_git_branch() {
 }
 
 function branch_color() {
-	local c_alert=$(tput setaf 160)
-	local c_warning=$(tput setaf 227)
-	local c_ok=$(tput setaf 82)
+	local c_alert=$(tput setaf 1)
+	local c_warning=$(tput setaf 3)
+	local c_ok=$(tput setaf 2)
 
     if [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
         color=""

@@ -182,3 +182,4 @@ function xcode() {
 function proj() {
 	cd ~/Projects/$1
 }
+complete -W "$(\ls ~/Projects)" proj
