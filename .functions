@@ -166,17 +166,25 @@ function unquarantine() {
 
 function colors() {
 	local x=`tput op`
-	local y=`printf %$((${COLUMNS}-6))s`
-	for i in {0..256}; do
-		o=00$i
-		echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x
-	done
+	if [ "$#" -eq 1 ]; then
+		local text="$1"
+		for i in {0..256}; do
+			o=00$i
+			echo -e ${o:${#o}-3:3} $(tput setaf $i)$text $(tput bold)$text$x
+		done
+	else
+		local y=`printf %$((${COLUMNS}-6))s`
+		for i in {0..256}; do
+			o=00$i
+			echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x
+		done
+	fi
 }
 
 function xcode() {
-	local xcfile=`find ./ -type d -depth 1 -name \*\.xcworkspace`
-	[ -e "$xcfile" ] || xcfile=`find ./ -type d -depth 1 -name \*\.xcodeproj`
-	[ -e "$xcfile" ] && (echo "Opening $xcfile in Xcode..."; open "$xcfile") || echo "No Xcode files found."
+	local xcfile=$(find ./ -type d -depth 1 -name *.xcworkspace)
+	[ -e "$xcfile" ] || xcfile=$(find ./ -type d -depth 1 -name *.xcodeproj)
+	[ -e "$xcfile" ] && (xcfile=$(readlink -m $xcfile); echo "Opening $(tput setaf 190)$xcfile$(tput op) in Xcode..."; open "$xcfile") || echo "No Xcode files found."
 }
 
 function proj() {
