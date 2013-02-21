@@ -35,6 +35,7 @@
 	last = log -1
 	unstage = reset HEAD --
 	a = add .
+	mt = mergetool
 
 [apply]
 	# Detect whitespace errors when applying a patch
@@ -69,6 +70,7 @@
 	tool = Kaleidoscope
 [mergetool]
 	prompt = false
+	keepBackup = false
 [mergetool "Kaleidoscope"]
 	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 	trustExitCode = true
