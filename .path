@@ -3,7 +3,8 @@ for another_bin in \
     $(brew --prefix coreutils)/libexec/gnubin \
     $HOME/bin \
     /usr/local/php5/bin \
-    $HOME/.rbenv/bin
+    $HOME/.rbenv/bin \
+    /usr/local/share/npm/bin	
 do
     [[ -e $another_bin ]] && export PATH=$another_bin:$PATH
 done
