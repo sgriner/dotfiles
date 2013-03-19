@@ -2,14 +2,14 @@
 for another_bin in \
     $(brew --prefix coreutils)/libexec/gnubin \
     $HOME/bin \
-    /usr/local/php5/bin \
+    $(brew --prefix)/php5/bin \
     $HOME/.rbenv/bin \
-    /usr/local/share/npm/bin	
+    $(brew --prefix)/share/npm/bin	
 do
     [[ -e $another_bin ]] && export PATH=$another_bin:$PATH
 done
 unset another_bin
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=$(brew --prefix)/bin:$(brew --prefix)/sbin:$PATH
 
 if which rbenv > /dev/null; then
 	eval "$(rbenv init -)"
