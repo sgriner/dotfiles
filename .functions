@@ -165,7 +165,7 @@ function unquarantine() {
 }
 
 function colors() {
-	local x=`tput op`
+	local x=`tput sgr0`
 	if [ "$#" -eq 1 ]; then
 		local text="$1"
 		for i in {0..256}; do
@@ -184,7 +184,7 @@ function colors() {
 function xcode() {
 	local xcfile=$(find ./ -type d -depth 1 -name *.xcworkspace)
 	[ -e "$xcfile" ] || xcfile=$(find ./ -type d -depth 1 -name *.xcodeproj)
-	[ -e "$xcfile" ] && (xcfile=$(readlink -m $xcfile); echo "Opening $(tput setaf 190)$xcfile$(tput op) in Xcode..."; open "$xcfile") || echo "No Xcode files found."
+	[ -e "$xcfile" ] && (xcfile=$(readlink -m $xcfile); echo "Opening ${YELLOW}${xcfile#$PWD/}${RESET} in Xcode..."; open "$xcfile") || echo "No Xcode files found."
 }
 
 function proj() {
