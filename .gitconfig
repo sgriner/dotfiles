@@ -61,9 +61,9 @@
 	old = red bold
 	new = green bold
 [color "status"]
-	added = green
-	changed = yellow
-	untracked = red
+	added = yellow
+	changed = green
+	untracked = cyan
 [merge]
 	# Include summaries of merged commits in newly created merge commit messages
 	log = true
