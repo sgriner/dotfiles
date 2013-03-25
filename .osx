@@ -90,6 +90,9 @@ systemsetup -setrestartfreeze on
 # Check for software updates daily, not just once per week
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
+# Set standby delay to a more reasonable value. (10800 seconds = 3 hrs)
+sudo pmset -a standbydelay 10800
+
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################
