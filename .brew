@@ -23,11 +23,18 @@ brew install php54
 # Install everything else
 brew install ack
 brew install git
+brew install git-flow-avh
 brew install lynx
 brew install node
 brew install rename
 brew install tree
 brew install webkit2png
+brew install mogenerator
+brew install mysql
+brew install phpmyadmin
+brew install rbenv
 
 # Remove outdated versions from the cellar
 brew cleanup
+
+echo "export FLAGS_GETOPT_CMD=""$(brew --prefix gnu-getopt)/bin/getopt""" > ~/.gitflow_export

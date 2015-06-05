@@ -1,10 +1,7 @@
 # PATH additions
 for another_bin in \
     $(brew --prefix coreutils)/libexec/gnubin \
-    $HOME/bin \
-    $(brew --prefix)/php5/bin \
-    $HOME/.rbenv/bin \
-    $(brew --prefix)/share/npm/bin	
+    $(brew --prefix)/php5/bin
 do
     [[ -e $another_bin ]] && export PATH=$another_bin:$PATH
 done
@@ -13,5 +10,7 @@ export PATH=$(brew --prefix)/bin:$(brew --prefix)/sbin:$PATH
 
 if which rbenv > /dev/null; then
 	eval "$(rbenv init -)"
-	rbenv global 1.9.3-p385
+	rbenv global system
 fi
+
+export PATH="$NPM_PACKAGES/bin:$PATH"
